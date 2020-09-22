@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * DTO for managing the response of the api.
+ * @author jcabrera
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,24 +29,6 @@ public class ResponseDTO implements Serializable {
     private Date date = new Date();
 
     private List<String> errores;
-
-    public ResponseDTO(boolean success, Object data, String message, Date date, List<String> errores) {
-        this.success = success;
-        this.data = data;
-        this.message = message;
-        this.date = date;
-        this.errores = errores;
-    }
-
-    public ResponseDTO(boolean success, String message) {
-        this.success = success;
-        this.message = message;
-    }
-
-    public ResponseDTO(boolean success, Object data) {
-        this.success = success;
-        this.data = data;
-    }
 
     public ResponseDTO(boolean success, Object data, String message, Exception e) {
         this.success = success;

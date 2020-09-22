@@ -18,7 +18,7 @@ import javax.validation.Valid;
 
 /**
  * REST controller for managing repeat sequence alphanumeric.
- *
+ * @author jcabrera
  */
 @RestController
 @RequestMapping("/api")
@@ -26,9 +26,18 @@ public class RepeatSequenceResource {
 
     private final Logger log = LoggerFactory.getLogger(RepeatSequenceResource.class);
 
-    @Autowired
-    private RepeatSequenceService repeatSequenceController;
+    private final RepeatSequenceService repeatSequenceController;
 
+    @Autowired
+    public RepeatSequenceResource(RepeatSequenceService repeatSequenceController) {
+        this.repeatSequenceController = repeatSequenceController;
+    }
+
+    /**
+     * Rest Method that return a sequence without repeated subsequences.
+     * @param sequence Sequence: general string sequence
+     * @return ResponseDTO object.
+     */
     @PostMapping("/remove-seq-repeat")
     public ResponseDTO removeSeqRepeat(@RequestBody Sequence sequence){
         try{
@@ -39,6 +48,7 @@ public class RepeatSequenceResource {
                     null
             );
         }catch (BusinessException be){
+            log.error("BusinessException: ", be.getMessage());
             return new ResponseDTO(
                     false,
                     null,
@@ -46,21 +56,27 @@ public class RepeatSequenceResource {
                     be
             );
         }
-        catch (Exception exception){
+        catch (Exception ex){
+            log.error("Exception: ", ex.getMessage());
             return new ResponseDTO(
                     false,
                     null,
-                    exception.getMessage(),
-                    exception
+                    ex.getMessage(),
+                    ex
             );
         }
     }
 
+    /**
+     * Rest Method that verifies status of the api.
+     * @return ResponseEntity object.
+     */
     @GetMapping("/health")
     public ResponseEntity<Map<String,String>> checkStatus(){
         Map<String,String> map = new LinkedHashMap<>();
         map.put("Estado","OK");
         map.put("DateTime", LocalDateTime.now().toString());
+        log.info("Check status: ", map.get("Estado"));
         return ResponseEntity.ok().body(map);
     }
 

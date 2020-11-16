@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -war target/repeatsequence-1.0.0.war

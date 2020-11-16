@@ -1,3 +1,1 @@
-buildpacks: clear
-war: deploy target/repeatsequence-1.0.0.war
 web: java -Dserver.port=$PORT -war target/repeatsequence-1.0.0.war
